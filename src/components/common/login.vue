@@ -52,12 +52,22 @@
             password: this.password,
           }
         }).then(res => {
-          console.log(this.username);
-          console.log(this.password);
           if (res.data.code === 200) {
-            console.log("请求成功")
+            if (res.data.data.authorities.length === 1) {
+              this.$cookies.set("cname", res.data.data.info.username);
+              this.$cookies.set("cid", res.data.data.info.id);
+              this.$router.push('/student')
+            } else {
+              this.$cookies.set("cname", res.data.data.info.username);
+              this.$cookies.set("cid", res.data.data.info.id);
+              this.$router.push('/teacher')
+            }
           } else {
-            console.log("请求失败")
+            this.$message({
+              showClose: true,
+              type: 'error',
+              message: '用户名或者密码错误'
+            })
           }
         })
       }
@@ -106,7 +116,7 @@
     width: 100%;
     overflow-y: auto;
     height: 100%;
-    background: url('../../assets/loginbg.png') center top / cover no-repeat;
+    background: url('../../assets/img/loginbg.png') center top / cover no-repeat;
     background-color: #b6bccdd1 !important;
   }
 
