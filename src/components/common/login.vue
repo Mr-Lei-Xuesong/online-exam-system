@@ -4,11 +4,11 @@
     <el-row class="main-container">
       <el-col :lg="8" :xs="16" :md="10" :span="10">
         <div class="top">
-          <i class="iconfont icon-kaoshi"></i><span class="title">在线考试系统</span>
+          <i class="iconfont icon-kaoshi"></i><span class="title"> </span>
         </div>
         <div class="bottom">
           <div class="container">
-            <p class="title">账号登录</p>
+            <p class="title">用户登录</p>
             <el-form label-width="80px">
               <el-form-item label="用户名">
                 <el-input v-model="username" placeholder="请输入用户名"></el-input>

@@ -1,10 +1,9 @@
-<!--页脚部分-->
 <template>
   <footer id="footer">
     <ul>
-      <li><a href="javascript:;">关于我们</a></li>
-      <li><a href="javascript:;">免责声明</a></li>
-      <li><a href="javascript:;">使用协议</a></li>
+      <li><a href="javascript:">关于我们</a></li>
+      <li><a href="javascript:">免责声明</a></li>
+      <li><a href="javascript:">使用协议</a></li>
       <li>@Copyright 2020-2021. ALL Rights Reserved</li>
     </ul>
   </footer>
