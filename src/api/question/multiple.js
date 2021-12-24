@@ -1,36 +1,36 @@
 import request from '@/api/request'
 
 /**
- * 查询单选题列表
+ * 查询多选题列表
  * @returns 
  */
-export function apiQuerySingleList (params) {
+export function apiQueryMultipleList (params) {
   return request({
-    url: '/queryAllSingle',
+    url: '/queryAllMultiple',
     method: 'GET',
     params: params
   })
 }
 
 /**
- * 查询单选题详情
- * @param {Number} id 单选题id
- */ 
-export function apiQuerySingleDetail (id) {
+ * 查询多选题详情
+ * @param {Number} id 多选题id
+ */
+export function apiQueryMultipleDetail (id) {
   return request({
-    url: `/querySingle/${id}`,
+    url: `/queryMultiple/${id}`,
     method: 'GET'
   })
 }
 
 /**
- * 新增单选题
+ * 新增多选题
  * @param {*} data
  * @returns 
  */
-export function apiAddSingle (data) {
+export function apiAddMultiple (data) {
   return request({
-    url: '/addSingle',
+    url: '/addMultiple',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
@@ -40,25 +40,25 @@ export function apiAddSingle (data) {
 }
 
 /**
- * 删除单选题
+ * 删除多选题
  * @param {*} id
  * @returns 
  */
-export function apiDeleteSingle (id) {
+export function apiDeleteMultipe (id) {
   return request({
-    url: `/deleteSingle/${id}`,
+    url: `/deleteMultiple/${id}`,
     method: 'DELETE'
   })
 }
 
 /**
- * 修改单选题
+ * 修改多选题
  * @param {*} data
  * @returns 
  */
-export function apiUpdateSingle (data) {
+export function apiUpdateMultiple (data) {
   return request({
-    url: '/updateSingle',
+    url: '/updateMultiple',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },

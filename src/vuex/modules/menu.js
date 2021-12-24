@@ -7,13 +7,13 @@ const state = {
       children: [
         {
           icon: '',
-          authName: '考试列表',
-          path: '/companyManage'
+          authName: '试卷列表',
+          path: '/examList'
         },
         {
           icon: '',
           authName: '新增考试',
-          path: '/companyAudit'
+          path: '/examAdd'
         }
       ]
     },

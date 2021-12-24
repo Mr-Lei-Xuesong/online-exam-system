@@ -20,6 +20,14 @@ export default new Router({
           component: () => import('@/components/teacher/welcome')
         },
         {
+          path: "/examList",
+          component: () => import('@/components/teacher/exam/examList')
+        },
+        {
+          path: "/examAdd",
+          component: () => import('@/components/teacher/exam/examAdd')
+        },
+        {
           path: "/singleChoice",
           component: () => import('@/components/teacher/question/singleChoice')
         },

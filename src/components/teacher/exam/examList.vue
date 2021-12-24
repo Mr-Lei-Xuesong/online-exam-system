@@ -1,58 +1,38 @@
 <template>
-  <div class="single-choice-container">
-    <content-header title="单选题"></content-header>
-    <div class="content-container">
+  <div class="exam-list">
+     <content-header title="试卷列表"></content-header>
+     <div class="content-container">
       <div class="content">
-        <!-- 按钮 -->
-        <el-button class="button" type="primary" @click="addSingle()">新增单选</el-button>
         <!-- 表格 -->
-        <el-table :data="questionList"
+        <el-table :data="examList"
                   border
                   style="width: 100%">
-          <el-table-column prop="id"
+          <el-table-column prop="examId"
                           label="id"
                           min-width="50"
                           align="center"
                           >
           </el-table-column>
-          <el-table-column prop="question"
-                          label="问题"
+          <el-table-column prop="description"
+                          label="描述"
                           min-width="50"
                           align="center"
                           >
           </el-table-column>
-          <el-table-column prop="answerA"
-                          label="A"
+          <el-table-column prop="examDate"
+                          label="考试时间"
                           min-width="50"
                           align="center"
                           >
           </el-table-column>
-          <el-table-column prop="answerB"
-                          label="B"
+          <el-table-column prop="totalScore"
+                          label="总分"
                           min-width="50"
                           align="center"
                           >
           </el-table-column>
-          <el-table-column prop="answerC"
-                          label="C"
-                          min-width="50"
-                          align="center"
-                          >
-          </el-table-column>
-          <el-table-column prop="answerD"
-                          label="D"
-                          min-width="50"
-                          align="center"
-                          >
-          </el-table-column>
-          <el-table-column prop="rightAnswer"
-                          label="正确答案"
-                          min-width="50"
-                          align="center"
-                          >
-          </el-table-column>
-          <el-table-column prop="score"
-                          label="分数"
+          <el-table-column prop="totalTime"
+                          label="考试时长"
                           min-width="50"
                           align="center"
                           >
@@ -89,19 +69,18 @@
 </template>
 
 <script>
-import { 
-  apiQuerySingleList,
-  apiDeleteSingle
-} from '@/api/question/single'
-import ContentHeader from '../components/contentHeader.vue'
+import {
+  apiQueryExamList
+} from '../../../api/exam/exam'
+import ContentHeader from "@/components/teacher/components/contentHeader.vue"
 export default {
-  name: 'OnlineExamSystemSinglechoice',
+  name: 'OnlineExamSystemExamlist',
 
   components: { ContentHeader },
 
   data() {
     return {
-      questionList: [],
+      examList: [],
       total: 0,
       pagingParam: {
         pageNum: 1,
@@ -110,22 +89,22 @@ export default {
     }
   },
 
-  created () {
+  created() {
     this.getPageData()
   },
 
   methods: {
     getPageData () {
       const params = this.pagingParam
-      apiQuerySingleList(params).then(res => {
+      apiQueryExamList(params).then(res => {
         const data = res.data
-        this.questionList = data.list
+        this.examList = data.list
         this.total = data.total
       })
     },
-    
-    addSingle () {
-      this.$router.push({ path: '/singleChoiceAdd' })
+
+    HandleAdd () {
+
     },
 
     handleEdit(row) {
@@ -141,7 +120,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        apiDeleteSingle(row.id).then(() => {
+        apiDeleteMultipe(row.id).then(() => {
           this.getPageData()
           this.$message({
             type: 'success',
@@ -165,12 +144,12 @@ export default {
       this.pagingParam.pageNum = e
       this.getPageData()
     }
-  },
-};
+  }
+}
 </script>
 
 <style lang="scss" scoped>
-.single-choice-container {
+.exam-list {
   .content-container {
     box-sizing: border-box;
     padding: 10px;
