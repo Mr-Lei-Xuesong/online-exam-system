@@ -40,7 +40,27 @@
       }
     },
     methods: {
-
+      login() {
+        this.$axios({
+          url: '/api/login',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          params: {
+            username: this.username,
+            password: this.password,
+          }
+        }).then(res => {
+          console.log(this.username);
+          console.log(this.password);
+          if (res.data.code === 200) {
+            console.log("请求成功")
+          } else {
+            console.log("请求失败")
+          }
+        })
+      }
     }
   }
 </script>
