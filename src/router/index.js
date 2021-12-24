@@ -14,7 +14,20 @@ export default new Router({
       path: '/teacher',
       name: 'teacher',
       component: () => import('@/components/teacher/index'),
-      children: []
+      children: [
+        {
+          path: "/",
+          component: () => import('@/components/teacher/welcome')
+        },
+        {
+          path: "/singleChoice",
+          component: () => import('@/components/teacher/question/singleChoice')
+        },
+        {
+          path: "/multipleChoice",
+          component: () => import('@/components/teacher/question/multipleChoice')
+        },
+      ]
     },
     {
       path: '/student',
