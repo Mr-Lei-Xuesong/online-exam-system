@@ -47,3 +47,16 @@ export function apiDeleteSingle (id) {
     method: 'DELETE'
   })
 }
+
+/**
+ * 新增单选题
+ * @param {*} data
+ * @returns 
+ */
+export function apiUpdateSingle (data) {
+  return request({
+    url: '/updateSingle',
+    method: 'PUT',
+    data: data
+  })
+}

@@ -24,6 +24,10 @@ export default new Router({
           component: () => import('@/components/teacher/question/singleChoice')
         },
         {
+          path: "/singleChoiceAdd",
+          component: () => import('@/components/teacher/question/singleChoiceAdd')
+        },
+        {
           path: "/multipleChoice",
           component: () => import('@/components/teacher/question/multipleChoice')
         },

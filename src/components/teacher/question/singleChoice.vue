@@ -4,7 +4,7 @@
     <div class="content-container">
       <div class="content">
         <!-- 按钮 -->
-        <el-button class="button" type="primary">新增单选</el-button>
+        <el-button class="button" type="primary" @click="addSingle()">新增单选</el-button>
         <!-- 表格 -->
         <el-table :data="questionList"
                   border
@@ -57,6 +57,21 @@
                           align="center"
                           >
           </el-table-column>
+          <el-table-column prop="score"
+                          label="操作"
+                          min-width="50"
+                          align="center"
+                          >
+            <template slot-scope="scope">
+              <el-button
+                size="mini"
+                @click="handleEdit(scope.row)">编辑</el-button>
+              <el-button
+                size="mini"
+                type="danger"
+                @click="handleDelete(scope.row)">删除</el-button>
+            </template>
+          </el-table-column>
         </el-table>
         <!-- 分页 -->
         <el-pagination  class="top"
@@ -76,8 +91,6 @@
 <script>
 import { 
   apiQuerySingleList,
-  apiQuerySingleDetail,
-  apiAddSingle,
   apiDeleteSingle
 } from '@/api/question/single'
 import ContentHeader from '../components/contentHeader.vue'
@@ -110,6 +123,39 @@ export default {
         this.total = data.total
       })
     },
+    
+    addSingle () {
+      console.log('asdf')
+      this.$router.push({ path: '/singleChoiceAdd' })
+    },
+
+    handleEdit(row) {
+      this.$router.push({
+        path: '/singleChoiceAdd',
+        query: row
+      })
+    },
+
+    handleDelete(row) {
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        apiDeleteSingle(row.id).then(() => {
+          this.getPageData()
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
 
     handleSizeChange (e) {
       this.pagingParam.pageSize = e
@@ -127,17 +173,18 @@ export default {
 <style lang="scss" scoped>
 .single-choice-container {
   .content-container {
+    box-sizing: border-box;
     padding: 10px;
     .content {
       padding: 10px;
       background-color: #fff;
     }
   }
-  .button {
+}
+.button {
     margin-bottom: 10px;
   }
   .top {
     margin-top: 10px;
   }
-}
 </style>
