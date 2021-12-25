@@ -214,10 +214,11 @@
             this.topic = {...res.data.data};
             console.log('试卷详情',this.topic);
 
-            this.reduceAnswer = this.topic[1][this.index];
-
-            console.log('这是什么',this.reduceAnswer);
+            // this.reduceAnswer = this.topic[1][this.index];
+            //
+            // console.log('这是什么',this.reduceAnswer);
             let keys = Object.keys(this.topic); //对象转数组
+            console.log('这又是什么',keys);
             keys.forEach(e => {
               let data = this.topic[e];
               this.topicCount.push(data.length);
