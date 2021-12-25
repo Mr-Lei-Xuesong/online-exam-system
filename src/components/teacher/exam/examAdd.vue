@@ -26,14 +26,7 @@
             </el-form>
           </el-tab-pane>
           <el-tab-pane label="单选题" name="second">
-            <div class="center">
-              <el-transfer v-model="data1Value"
-                           :data="data1Question"
-                           :titles="['未选题目', '已选题目']"
-                           @left-check-change="test"
-                           >
-              </el-transfer>
-            </div>
+            
           </el-tab-pane>
           <el-tab-pane label="多选题" name="third">
 
@@ -77,19 +70,6 @@ export default {
     }
   },
 
-  computed: {
-    data1Question () {
-      const data = []
-      for (let i = 1; i < this.data1.length; i++) {
-        data.push({
-          key: this.data1[i].id,
-          label: this.data1[i].question,
-        });
-      }
-      return data;
-    }
-  },
-
   created() {
     this.getPagedata()
   },
@@ -103,13 +83,9 @@ export default {
 
     handleClick (tab, event) {
       console.log(tab, event)
-    },
-
-    test (e) {
-      console.log(e)
     }
-  },
-};
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -130,20 +106,5 @@ export default {
 .btn-group {
   height: 60px;
   background-color: pink;
-}
-
-.center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/deep/ .el-transfer-panel {
-  width: 600px;
-  height: 500px;
-}
-
-/deep/ .el-checkbox-group {
-  height: 500px;
 }
 </style>
