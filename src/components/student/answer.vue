@@ -167,13 +167,8 @@
         },
         topicCount: [],//每种类型题目的总数
         score: [],  //每种类型分数的总数
-        examData: { //考试信息
-          // source: null,
-          // totalScore: null,
-        },
-        topic: {  //试卷信息
-
-        },
+        examData: {},//考试信息
+        topic: {},//试卷信息
         showQuestion: [], //当前显示题目信息
         showAnswer: {}, //当前题目对应的答案选项
         number: 1, //题号
@@ -208,38 +203,40 @@
 
       },
       getExamData() { //获取当前试卷所有信息
-        let date = new Date()
-        this.startTime = this.getTime(date)
-        let examCode = this.$route.query.examCode //获取路由传递过来的试卷编号
-        this.$axios(`/api/exam/${examCode}`).then(res => {  //通过examCode请求试卷详细信息
-          this.examData = {...res.data.data} //获取考试详情
-          this.index = 0
-          this.time = this.examData.totalScore //获取分钟数
-          let paperId = this.examData.paperId
-          this.$axios(`/api/paper/${paperId}`).then(res => {  //通过paperId获取试题题目信息
-            this.topic = {...res.data}
-            let reduceAnswer = this.topic[1][this.index]
-            this.reduceAnswer = reduceAnswer
-            let keys = Object.keys(this.topic) //对象转数组
+        let date = new Date();
+        this.startTime = this.getTime(date);
+        let examCode = this.$route.query.examId;//获取路由传递过来的试卷编号
+        this.$axios(`/api/findExamById/${examCode}`).then(res => {  //通过examCode请求试卷详细信息
+          this.examData = {...res.data.data};//获取考试详情
+          this.index = 0;
+          this.time = this.examData.totalTime;//获取分钟数
+          this.$axios(`/api/queryExamPaper/${examCode}`).then(res => {  //通过paperId获取试题题目信息
+            this.topic = {...res.data.data};
+            console.log('试卷详情',this.topic);
+
+            this.reduceAnswer = this.topic[1][this.index];
+
+            console.log('这是什么',this.reduceAnswer);
+            let keys = Object.keys(this.topic); //对象转数组
             keys.forEach(e => {
-              let data = this.topic[e]
-              this.topicCount.push(data.length)
-              let currentScore = 0
+              let data = this.topic[e];
+              this.topicCount.push(data.length);
+              let currentScore = 0;
               for (let i = 0; i < data.length; i++) { //循环每种题型,计算出总分
                 currentScore += data[i].score
               }
               this.score.push(currentScore) //把每种题型总分存入score
-            })
-            let len = this.topicCount[1]
-            let father = []
+            });
+            let len = this.topicCount[1];
+            let father = [];
             for (let i = 0; i < len; i++) { //根据填空题数量创建二维空数组存放每道题答案
-              let children = [null, null, null, null]
+              let children = [null, null, null, null];
               father.push(children)
             }
-            this.fillAnswer = father
-            let dataInit = this.topic[1]
-            this.number = 1
-            this.showQuestion = dataInit[0].question
+            this.fillAnswer = father;
+            let dataInit = this.topic[1];
+            this.number = 1;
+            this.showQuestion = dataInit[0].question;
             this.showAnswer = dataInit[0]
           })
         })
@@ -447,9 +444,8 @@
               url: '/api/score',
               method: 'post',
               data: {
-                examCode: this.examData.examCode, //考试编号
+                examCode: this.examData.examId, //考试编号
                 studentId: this.userInfo.id, //学号
-                subject: this.examData.source, //课程名称
                 etScore: finalScore, //答题成绩
                 answerDate: answerDate, //答题日期
               }
@@ -484,7 +480,8 @@
           }
         }, 1000 * 60)
       }
-    }
+    },
+    computed:mapState(["isPractice"])
   }
 </script>
 
