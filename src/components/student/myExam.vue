@@ -1,9 +1,9 @@
 <template>
   <div id="myExam">
     <div class="wrapper">
-      <ul class="paper" v-loading="loading">
-        <li class="item" v-for="(item,index) in pagination.list" :key="index">
-          <h4 @click="toExamMsg(item.examCode)">{{item.description}}</h4>
+      <ul class="paper" :loading="loading">
+        <li class="item" v-for="(item,index) in allExam" :key="index">
+          <h4 @click="toAnswer(item.examId)">{{item.description}}</h4>
           <div class="info">
             <i class="el-icon-loading"></i><span>{{item.examDate.substr(0,10)}}</span>
             <i class="iconfont icon-icon-time"></i><span v-if="item.totalTime != null">限时{{item.totalTime}}分钟</span>
@@ -20,7 +20,7 @@
     data() {
       return {
         loading: false,
-        allExam: null, //所有考试信息
+        allExam: [],
       }
     },
     created() {
@@ -28,16 +28,16 @@
       this.loading = true
     },
     methods: {
-      //获取当前所有考试信息
       getExamInfo() {
         this.$axios(`/api/queryAllExam`).then(res => {
-          this.pagination = res.data.data;
+          console.log(res.data.data.list);
           this.loading = false;
-          console.log(res.data.data.list)
-        }).catch(error => {
-          console.log(error)
+          this.allExam = res.data.data.list;
         })
-      }
+      },
+      toAnswer(examId) {
+        this.$router.push({path:"/answer",query:{examId: examId}})
+      },
     }
   }
 </script>

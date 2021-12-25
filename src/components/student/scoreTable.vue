@@ -1,13 +1,14 @@
 <template>
   <div class="table">
     <section class="content-el">
-      <el-table ref="score" :data="score" v-loading="loading">
+      <el-table ref="score" :data="listScore" v-loading="loading">
         <el-table-column
           prop="examDate"
           label="考试日期"
           sortable
           width="300"
-          column-key="examDate">
+          column-key="examDate"
+          :formatter="carTimeFilter">
         </el-table-column>
         <el-table-column
           prop="description"
@@ -28,27 +29,34 @@
 </template>
 
 <script>
+  import moment from 'moment';
+
   export default {
     data() {
       return {
-        loading: false, //加载标识符
-        score: [], //学生成绩
+        loading: false,
+        listScore: [],
       }
     },
     created() {
       this.getScore();
-      this.loading = true //数据加载则遮罩表格
+      this.loading = true
     },
     methods: {
       getScore() {
         let studentId = this.$cookies.get("cid");
-        let that = this;
-        this.$axios(`/api/findUserExamInfo/2`).then(res => {
+        this.$axios(`/api/findUserExamInfo/${studentId}`).then(res => {
           if (res.data.code === 200) {
             this.loading = false;
-            that.score = res.data.data;
+            this.listScore = res.data.data;
           }
         })
+      },
+      carTimeFilter(row, column, cellValue, index) {
+        const daterc = row[column.property];
+        if (daterc != null) {
+          return moment(daterc).format("YYYY-MM-DD")
+        }
       }
     }
   };

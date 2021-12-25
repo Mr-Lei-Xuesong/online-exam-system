@@ -47,7 +47,7 @@ export default new Router({
       component: () => import('@/components/student/index'),
       children: [
         {
-          path: "/",
+          path: "/myExam",
           component: () => import('@/components/student/myExam')
         },
         {
